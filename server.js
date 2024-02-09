@@ -20,7 +20,8 @@ db.run(`CREATE TABLE IF NOT EXISTS projects (
     url TEXT NOT NULL,
     title TEXT,
     description TEXT,
-    image TEXT
+    image TEXT,
+    classname TEXT
 )`);
 
 // Middleware pour parser le corps des requêtes POST en JSON
@@ -40,20 +41,14 @@ app.get('/projects', (req, res) => {
 
 // Route pour ajouter un nouveau projet
 app.post('/projects', async (req, res) => {
-    const { name, url, image } = req.body;
+    const { url, image, title, description, name, classname  } = req.body;
 
     try {
         const response = await axios.get(url);
         const html = response.data;
         const $ = cheerio.load(html);
 
-        // Utiliser le sélecteur pour le titre
-        const title = $('strong[itemprop="name"] a').first().text();
-
-        // Utiliser le sélecteur pour la description
-        const description = $('p.my-3').first().text(); // Gardez cela comme avant
-
-        db.run(`INSERT INTO projects (name, url, title, description, image) VALUES (?, ?, ?, ?, ?)`, [name, url, title, description, image], function(err) {
+        db.run(`INSERT INTO projects (name, url, title, description, image, classname) VALUES (?, ?, ?, ?, ?, ?)`, [name, url, title, description, image, classname], function(err) {
             if (err) {
                 res.status(400).send("Erreur lors de l'ajout du projet");
                 console.error(err.message);
