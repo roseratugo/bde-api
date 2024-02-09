@@ -10,7 +10,6 @@ COPY package*.json ./
 # Installez les dépendances du projet
 RUN npm install
 
-# Copiez les fichiers et dossiers du projet dans le répertoire de travail du conteneur
 COPY . .
 
 # Exposez le port sur lequel l'application s'exécute
