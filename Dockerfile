@@ -2,7 +2,7 @@
 FROM node:14
 
 # Définissez le répertoire de travail dans le conteneur
-WORKDIR /usr/src/app
+WORKDIR /usr/src/server
 
 # Copiez les fichiers de définition des dépendances
 COPY package*.json ./
@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 3000
 
 # Commande pour démarrer l'application
-CMD ["node", "app.js"]
+CMD ["node", "server.js"]
